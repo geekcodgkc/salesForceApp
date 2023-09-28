@@ -1,27 +1,42 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Image } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Dashboard from "./src/screens/Dashboard";
+import Colors from "./src/res/colors";
+
+const Tabs = createBottomTabNavigator();
 
 export default function App() {
 	return (
-		<View style={styles.container}>
-			<Text style={styles.Text}>starting point</Text>
-			<StatusBar style="auto" />
-		</View>
+		<NavigationContainer>
+			<Tabs.Navigator
+				screenOptions={{
+					tabBarLabelStyle: {
+						color: Colors.white,
+					},
+					tabBarActiveBackgroundColor: Colors.EerieBlack,
+					headerShown: false,
+				}}
+			>
+				<Tabs.Screen
+					name="Inicio"
+					component={Dashboard}
+					options={{
+						tabBarIcon: ({ size }) => {
+							return (
+								<Image
+									style={{
+										tintColor: Colors.BattleshipGray,
+										width: size,
+										height: size,
+									}}
+									source={require("./assets/dashboards.png")}
+								/>
+							);
+						},
+					}}
+				/>
+			</Tabs.Navigator>
+		</NavigationContainer>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-		padding: 60,
-	},
-	Text: {
-		fontSize: 50,
-		textAlign: "center",
-		lineHeight: 65,
-		fontWeight: "bold",
-	},
-});
