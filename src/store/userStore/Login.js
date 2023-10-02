@@ -9,8 +9,15 @@ const login = async (user, password, set) => {
 			password,
 		});
 
+		console.log(data);
+
 		set((state) => ({
 			...state,
+			userData: {
+				...data.userData,
+				isAdmin: data.isAdmin,
+				clientId: data.clientId,
+			},
 			loading: false,
 			token: data.token,
 			error: null,

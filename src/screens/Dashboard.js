@@ -2,14 +2,15 @@ import { View, StyleSheet, Text } from "react-native";
 import Colors from "../res/colors";
 import { useUserStore } from "../store/userStore";
 import Toast from "react-native-toast-message";
+import ProfileName from "../components/ProfileName";
 
 const Dashboard = () => {
 	const state = useUserStore((state) => state);
-	console.log(state);
 
 	return (
 		<View style={styles.container}>
 			<Toast />
+			<ProfileName />
 			<Text style={styles.Text}>this is the initial test</Text>
 		</View>
 	);
@@ -20,8 +21,8 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: Colors.WhiteSmoke,
 		alignItems: "center",
-		justifyContent: "center",
-		padding: 60,
+		padding: 24,
+		paddingTop: 60,
 	},
 	Text: {
 		fontSize: 50,
