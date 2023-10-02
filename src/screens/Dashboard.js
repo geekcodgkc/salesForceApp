@@ -1,15 +1,15 @@
 import { View, StyleSheet, Text } from "react-native";
 import Colors from "../res/colors";
 import { useUserStore } from "../store/userStore";
+import Toast from "react-native-toast-message";
 
-const Dashboard = ({ navigation }) => {
+const Dashboard = () => {
 	const state = useUserStore((state) => state);
 	console.log(state);
 
-	if (!state.token) return navigation.navigate("Login");
-
 	return (
 		<View style={styles.container}>
+			<Toast />
 			<Text style={styles.Text}>this is the initial test</Text>
 		</View>
 	);

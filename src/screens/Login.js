@@ -6,24 +6,24 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import Colors from "../res/colors";
+import Toast from "react-native-toast-message";
 import { useEffect, useState } from "react";
 import { useUserStore } from "../store/userStore";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
 	const [user, setUser] = useState("");
 	const [password, setpassword] = useState("");
 	const UserState = useUserStore((state) => state);
 
-	useEffect(() => {
-		if (UserState.token) navigation.navigate("Inicio");
-	});
+	useEffect(() => {}, [UserState.error]);
 
 	const handleLogin = () => {
-		UserState.login(user, password, navigation);
+		UserState.login(user, password);
 	};
 
 	return (
 		<View style={styles.container}>
+			<Toast />
 			<Text style={styles.Text}>Inicia sesion</Text>
 			<Text style={styles.LabelText}>Ingresa tu usuario</Text>
 			<TextInput

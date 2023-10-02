@@ -5,7 +5,8 @@ export const useUserStore = create((set) => ({
 	token: null,
 	loading: false,
 	error: null,
-	login: async (user, password, navigation) => {
-		await loginService(user, password, set, navigation);
+	userData: null,
+	login: async (user, password) => {
+		await loginService(user, password, set);
 	},
 }));

@@ -6,6 +6,7 @@ const api = axios.create({
 		Authorization:
 			"Bearer 3egUxGRb1x2ekiHreBshswQpsEL0QsgOtSYcMYiiOoPx7PtU70EYpHdJ6vALOisb",
 	},
+	timeout: 5000,
 });
 
 export default api;
