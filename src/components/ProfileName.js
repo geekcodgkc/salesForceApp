@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
 		width: "100%",
 	},
 	TextHeader: {
-		fontSize: 40,
+		fontSize: 36,
 		textAlign: "left",
 		fontWeight: "bold",
 	},
 	TextBottom: {
-		fontSize: 12,
+		fontSize: 16,
 		textAlign: "left",
 	},
 });
