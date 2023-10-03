@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import Colors from "../res/colors";
 import { useUserStore } from "../store/userStore";
 import Toast from "react-native-toast-message";
@@ -11,10 +11,12 @@ const Dashboard = () => {
 
 	return (
 		<View style={styles.container}>
-			<Toast />
-			<ProfileName />
-			<SalesCarousel />
-			<CustomersList />
+			<ScrollView style={styles.scrollContainer}>
+				<Toast />
+				<ProfileName />
+				<SalesCarousel />
+				<CustomersList />
+			</ScrollView>
 		</View>
 	);
 };
@@ -23,10 +25,11 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: Colors.WhiteSmoke,
-		alignItems: "center",
-		padding: 24,
 		paddingTop: 40,
-		overflow: "scroll",
+	},
+	scrollContainer: {
+		flex: 1,
+		padding: 24,
 	},
 });
 

@@ -5,6 +5,8 @@ import {
 	ActivityIndicator,
 	Platform,
 	FlatList,
+	TouchableOpacity,
+	SafeAreaView,
 } from "react-native";
 import { useSalesStore } from "../store/salesStore";
 import Colors from "../res/colors";
@@ -35,20 +37,26 @@ const CustomersList = () => {
 				}}
 			/>
 			{state.customers && (
-				<View
+				<SafeAreaView
 					style={{
 						width: "100%",
 						padding: 0,
 						margin: 0,
+						flex: 1,
 					}}
 				>
 					{state.customers.length > 0 ? (
 						<FlatList
 							data={state.customers}
-							renderItem={({ item }) => {
+							renderItem={({ item, index }) => {
 								console.log(item);
 								return (
-									<View style={styles.cardContainer}>
+									<TouchableOpacity
+										style={styles.cardContainer}
+										onPress={() =>
+											console.log(`elemento con index ${index} presionado`)
+										}
+									>
 										<Text
 											style={styles.cardHeaderText}
 										>{`Cliente: ${item.name} - ${item.id}`}</Text>
@@ -64,7 +72,7 @@ const CustomersList = () => {
 										<Text
 											style={styles.cardInfoText}
 										>{`Persona de Contacto: ${item.contact}`}</Text>
-									</View>
+									</TouchableOpacity>
 								);
 							}}
 						/>
@@ -73,7 +81,7 @@ const CustomersList = () => {
 							Aun no tienes Clientes asignados ...
 						</Text>
 					)}
-				</View>
+				</SafeAreaView>
 			)}
 		</View>
 	);
