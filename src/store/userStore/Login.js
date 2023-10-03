@@ -16,7 +16,7 @@ const login = async (user, password, set) => {
 			userData: {
 				...data.userData,
 				isAdmin: data.isAdmin,
-				clientId: data.clientId,
+				clientID: data.clientID,
 			},
 			loading: false,
 			token: data.token,

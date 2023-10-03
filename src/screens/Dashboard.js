@@ -1,9 +1,10 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Colors from "../res/colors";
 import { useUserStore } from "../store/userStore";
 import Toast from "react-native-toast-message";
 import ProfileName from "../components/ProfileName";
 import SalesCarousel from "../components/SalesCaousel";
+import CustomersList from "../components/CustomersList";
 
 const Dashboard = () => {
 	const state = useUserStore((state) => state);
@@ -13,6 +14,7 @@ const Dashboard = () => {
 			<Toast />
 			<ProfileName />
 			<SalesCarousel />
+			<CustomersList />
 		</View>
 	);
 };
@@ -23,7 +25,8 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.WhiteSmoke,
 		alignItems: "center",
 		padding: 24,
-		paddingTop: 60,
+		paddingTop: 40,
+		overflow: "scroll",
 	},
 });
 
