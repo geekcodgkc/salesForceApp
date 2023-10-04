@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Dashboard from "./src/screens/Dashboard";
 import Colors from "./src/res/colors";
 import LoginScreen from "./src/screens/Login";
-import { useUserStore } from "./src/store/userStore";
+import { useUserStore } from "./src/store";
 import Products from "./src/screens/Products";
 import Cart from "./src/screens/Cart";
 import Profile from "./src/screens/Profile";

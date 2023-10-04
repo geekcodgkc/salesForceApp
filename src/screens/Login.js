@@ -8,7 +8,7 @@ import {
 import Colors from "../res/colors";
 import Toast from "react-native-toast-message";
 import { useEffect, useState } from "react";
-import { useUserStore } from "../store/userStore";
+import { useUserStore } from "../store/";
 
 const LoginScreen = () => {
 	const [user, setUser] = useState("");

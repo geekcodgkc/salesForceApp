@@ -5,7 +5,7 @@ import {
 	ActivityIndicator,
 	Platform,
 } from "react-native";
-import { useSalesStore } from "../store/salesStore";
+import { useSalesStore } from "../store/";
 import Colors from "../res/colors";
 import { useEffect } from "react";
 

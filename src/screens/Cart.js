@@ -1,6 +1,6 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import Colors from "../res/colors";
-import { useUserStore } from "../store/userStore";
+import { useUserStore } from "../store/";
 import Toast from "react-native-toast-message";
 import ProfileName from "../components/ProfileName";
 import SalesCarousel from "../components/SalesCaousel";

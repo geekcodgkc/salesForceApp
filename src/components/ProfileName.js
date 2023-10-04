@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useUserStore } from "../store/userStore";
+import { useUserStore } from "../store/";
 
 const ProfileName = () => {
 	const state = useUserStore((state) => state);

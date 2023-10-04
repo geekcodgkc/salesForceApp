@@ -8,7 +8,7 @@ import {
 	TouchableOpacity,
 	SafeAreaView,
 } from "react-native";
-import { useSalesStore } from "../store/salesStore";
+import { useSalesStore } from "../store/";
 import Colors from "../res/colors";
 import { useEffect } from "react";
 
@@ -30,10 +30,11 @@ const CustomersList = () => {
 			)}
 			<View
 				style={{
-					height: 2,
+					height: 4,
 					width: "100%",
 					backgroundColor: Colors.EerieBlack,
 					marginBottom: 32,
+					borderRadius: 2,
 				}}
 			/>
 			{state.customers && (
