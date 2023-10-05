@@ -9,12 +9,17 @@ import Colors from "../res/colors";
 import Toast from "react-native-toast-message";
 import { useEffect } from "react";
 import { useProductsStore } from "../store/";
+import ProductsList from "../components/ProductsList";
 
 const Products = () => {
 	const state = useProductsStore((state) => state);
 
 	useEffect(() => {
-		if (!state.products) state.getProducts();
+		if (!state.products) {
+			state.getProducts();
+			state.getDepartments();
+		}
+		console.log(state);
 	}, []);
 
 	return (
@@ -23,16 +28,25 @@ const Products = () => {
 				<Toast />
 				<Text style={styles.textHeader}>Mis Productos</Text>
 				<View style={styles.divider} />
-				<Text>{JSON.stringify(state.products)}</Text>
-				<Text>{JSON.stringify(state.error)}</Text>
-				<TouchableOpacity
-					style={styles.btn}
-					onPress={() => {
-						state.getProducts();
-					}}
-				>
-					<Text style={styles.btnText}>reload</Text>
-				</TouchableOpacity>
+				{!state.products && state.error && (
+					<View style={styles.errorContainer}>
+						<Text style={styles.errorContainerText}>
+							Hubo un error al consultar los productos por favor reintente mas
+							tarde
+						</Text>
+						<TouchableOpacity
+							style={styles.btn}
+							onPress={() => {
+								state.getProducts();
+								state.getDepartments();
+								console.log("press");
+							}}
+						>
+							<Text style={styles.btnText}>Reintentar</Text>
+						</TouchableOpacity>
+					</View>
+				)}
+				{state.products && !state.error && <ProductsList />}
 			</ScrollView>
 		</View>
 	);
@@ -49,8 +63,25 @@ const styles = StyleSheet.create({
 		padding: 24,
 	},
 	btn: {
+		width: "70%",
+		marginTop: 24,
 		padding: 16,
 		backgroundColor: Colors.BattleshipGray,
+		borderRadius: 8,
+		alignItems: "center",
+	},
+	btnText: {
+		color: Colors.WhiteSmoke,
+		fontSize: 18,
+		fontWeight: "700",
+	},
+	errorContainer: {
+		alignItems: "center",
+	},
+	errorContainerText: {
+		fontWeight: "700",
+		textAlign: "center",
+		fontSize: 24,
 	},
 	textHeader: {
 		fontSize: 36,

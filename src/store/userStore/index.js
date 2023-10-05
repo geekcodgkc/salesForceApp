@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { login as loginService } from "./Login";
+import { login as loginService, logoutService } from "./Login";
 
 export const useUserStore = create((set) => ({
 	token: null,
@@ -8,5 +8,8 @@ export const useUserStore = create((set) => ({
 	userData: null,
 	login: async (user, password) => {
 		await loginService(user, password, set);
+	},
+	logout: async () => {
+		await logoutService(set);
 	},
 }));

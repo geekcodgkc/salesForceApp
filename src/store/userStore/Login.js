@@ -9,8 +9,6 @@ const login = async (user, password, set) => {
 			password,
 		});
 
-		console.log(data);
-
 		set((state) => ({
 			...state,
 			userData: {
@@ -51,4 +49,21 @@ const login = async (user, password, set) => {
 	}
 };
 
-export { login };
+const logoutService = async (set) => {
+	try {
+		await api.post("/logout");
+		set((state) => ({
+			...state,
+			token: null,
+			error: null,
+		}));
+	} catch (error) {
+		set((state) => ({
+			...state,
+			token: null,
+			error: null,
+		}));
+	}
+};
+
+export { login, logoutService };
