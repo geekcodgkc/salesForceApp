@@ -41,4 +41,24 @@ const getDepartmentsSerice = async (set) => {
 	}
 };
 
-export { getProductsService, getDepartmentsSerice };
+const textSearchService = (search, set) => {
+	if (search.trim() === "")
+		set((state) => {
+			state.filteredProducts = state.products;
+			return state;
+		});
+	set((state) => {
+		const filtered = state.products.filter((product) =>
+			`${product.name.toLowerCase()} ${product.department
+				.join(" ")
+				.toLowerCase()} ${product.id.toString().toLowerCase()}`.includes(
+				search.toLowerCase(),
+			),
+		);
+
+		console.log(filtered.map((e) => e.name));
+		return { ...state, filteredProducts: filtered };
+	});
+};
+
+export { getProductsService, getDepartmentsSerice, textSearchService };

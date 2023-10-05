@@ -10,6 +10,7 @@ import Toast from "react-native-toast-message";
 import { useEffect } from "react";
 import { useProductsStore } from "../store/";
 import ProductsList from "../components/ProductsList";
+import ProductsSearchBar from "../components/ProductsSearchBar";
 
 const Products = () => {
 	const state = useProductsStore((state) => state);
@@ -28,6 +29,7 @@ const Products = () => {
 				<Toast />
 				<Text style={styles.textHeader}>Mis Productos</Text>
 				<View style={styles.divider} />
+				<ProductsSearchBar />
 				{!state.products && state.error && (
 					<View style={styles.errorContainer}>
 						<Text style={styles.errorContainerText}>
@@ -46,7 +48,13 @@ const Products = () => {
 						</TouchableOpacity>
 					</View>
 				)}
-				{state.products && !state.error && <ProductsList />}
+				{state.products && !state.error && (
+					<ProductsList
+						productsList={state.filteredProducts}
+						loading={state.loading}
+						extra={state.filteredProducts}
+					/>
+				)}
 			</ScrollView>
 		</View>
 	);
@@ -84,7 +92,7 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 	},
 	textHeader: {
-		fontSize: 36,
+		fontSize: 24,
 		textAlign: "left",
 		fontWeight: "bold",
 	},
@@ -92,7 +100,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 4,
 		backgroundColor: Colors.EerieBlack,
-		marginBottom: 32,
+		marginBottom: 16,
 		marginTop: 16,
 		borderRadius: 2,
 	},

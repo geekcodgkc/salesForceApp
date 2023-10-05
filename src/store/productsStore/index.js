@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { getProductsService, getDepartmentsSerice } from "./productsService";
+import {
+	getProductsService,
+	getDepartmentsSerice,
+	textSearchService,
+} from "./productsService";
 
 export const useProductsStore = create((set) => ({
 	loading: false,
@@ -12,5 +16,8 @@ export const useProductsStore = create((set) => ({
 	},
 	getDepartments: async () => {
 		await getDepartmentsSerice(set);
+	},
+	textSearch: (search) => {
+		textSearchService(search, set);
 	},
 }));

@@ -8,16 +8,20 @@ import {
 	TouchableOpacity,
 	SafeAreaView,
 } from "react-native";
-import { useProductsStore } from "../store";
 import Colors from "../res/colors";
 import { useEffect } from "react";
+import { useProductsStore } from "../store";
 
-const ProductsList = () => {
+const ProductsList = ({ productsList, loading, extra }) => {
 	const state = useProductsStore((state) => state);
+
+	useEffect(() => {
+		console.log("changes");
+	}, [state]);
 
 	return (
 		<View style={styles.ListContainer}>
-			{state.loading && (
+			{loading && (
 				<ActivityIndicator
 					size={Platform.OS === "ios" ? "Large" : 100}
 					color={Colors.PigmentGreen}
@@ -31,9 +35,10 @@ const ProductsList = () => {
 					flex: 1,
 				}}
 			>
-				{state.products.length > 0 ? (
+				{productsList.length > 0 ? (
 					<FlatList
-						data={state.filteredProducts}
+						extraData={extra}
+						data={productsList}
 						renderItem={({ item, index }) => {
 							console.log(item);
 							return (
