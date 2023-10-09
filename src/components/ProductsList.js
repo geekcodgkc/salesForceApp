@@ -9,15 +9,11 @@ import {
 	SafeAreaView,
 } from "react-native";
 import Colors from "../res/colors";
-import { useEffect } from "react";
-import { useProductsStore } from "../store";
+//import { useEffect } from "react";
+//import { useProductsStore } from "../store";
 
 const ProductsList = ({ productsList, loading, extra }) => {
-	const state = useProductsStore((state) => state);
-
-	useEffect(() => {
-		console.log("changes");
-	}, [state]);
+	//const state = useProductsStore((state) => state);
 
 	return (
 		<View style={styles.ListContainer}>
@@ -40,7 +36,6 @@ const ProductsList = ({ productsList, loading, extra }) => {
 						extraData={extra}
 						data={productsList}
 						renderItem={({ item, index }) => {
-							console.log(item);
 							return (
 								<TouchableOpacity
 									style={styles.cardContainer}

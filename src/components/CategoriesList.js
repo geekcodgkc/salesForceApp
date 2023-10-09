@@ -18,7 +18,7 @@ const CategoriesList = () => {
 
 	useEffect(() => {
 		if (!state.departments) state.getDepartments();
-	}, []);
+	}, [state]);
 
 	const handleSelect = (status, name) => {
 		if (status) {
@@ -48,12 +48,14 @@ const CategoriesList = () => {
 			>
 				<Text style={styles.btnText}>Filtrar por Categorias</Text>
 			</TouchableOpacity>
-			<View>
-				{state.selectedDepartments?.map((item) => (
-					<View key={item._id}>
-						<Text>{item.name}</Text>
-					</View>
-				))}
+			<View style={styles.CategorieTagContainer}>
+				{state.selectedDepartments?.map((name) => {
+					return (
+						<View key={name} style={styles.CategorieTag}>
+							<Text style={styles.CategorieTagName}>{name}</Text>
+						</View>
+					);
+				})}
 			</View>
 			<Modal
 				animationType="slide"
@@ -67,13 +69,28 @@ const CategoriesList = () => {
 				<View style={styles.modalOptions}>
 					<View style={styles.OptionsContainer}>
 						<ScrollView style={{ width: "100%" }}>
-							{state.departments?.map((d) => (
-								<CategoriItem
-									key={d._id}
-									name={d.name}
-									handleSelected={handleSelect}
-								/>
-							))}
+							{state.departments?.map((d) => {
+								let isActive = false;
+								state.selectedDepartments?.forEach((e) => {
+									if (e === d.name) {
+										isActive = true;
+									}
+								});
+
+								if (isActive) {
+									departments.add(d.name);
+									console.log(departments);
+								}
+
+								return (
+									<CategoriItem
+										key={d._id}
+										name={d.name}
+										isActive={isActive}
+										handleSelected={handleSelect}
+									/>
+								);
+							})}
 						</ScrollView>
 						<View style={styles.buttonsContainer}>
 							<TouchableOpacity onPress={handleSetCat}>
@@ -113,6 +130,23 @@ const styles = StyleSheet.create({
 	btnError: { padding: 8, color: "#ed4337", fontSize: 18, fontWeight: "700" },
 	catContainer: {
 		marginBottom: 16,
+	},
+	CategorieTagContainer: {
+		width: "100%",
+		flexWrap: "wrap",
+		gap: 8,
+		marginTop: 8,
+		alignItems: "center",
+		flexDirection: "row",
+	},
+	CategorieTag: {
+		backgroundColor: Colors.BattleshipGray,
+		padding: 8,
+		borderRadius: 8,
+	},
+	CategorieTagName: {
+		color: Colors.white,
+		fontWeight: "600",
 	},
 	btn: {
 		width: "70%",

@@ -1,6 +1,6 @@
 import { View, StyleSheet, TextInput } from "react-native";
 import Colors from "../res/colors";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useProductsStore } from "../store";
 
 const ProductsSearchBar = () => {

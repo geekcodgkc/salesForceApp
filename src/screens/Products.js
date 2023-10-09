@@ -21,7 +21,6 @@ const Products = () => {
 			state.getProducts();
 			state.getDepartments();
 		}
-		console.log(state);
 	}, []);
 
 	return (

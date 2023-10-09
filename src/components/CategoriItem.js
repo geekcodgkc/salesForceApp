@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import Colors from "../res/colors";
+import { useProductsStore } from "../store";
 
-export default function CategoriItem({ name, handleSelected }) {
-	const [selected, setSelected] = useState(false);
+export default function CategoriItem({
+	name,
+	handleSelected,
+	isActive = false,
+}) {
+	const [selected, setSelected] = useState(isActive);
 
 	return (
 		<TouchableOpacity
