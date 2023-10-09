@@ -11,6 +11,10 @@ export const useProductsStore = create((set) => ({
 	products: null,
 	filteredProducts: null,
 	departments: null,
+	selectedDepartments: null,
+	setSelectedDepartments: (departments) => {
+		set((state) => ({ ...state, selectedDepartments: departments }));
+	},
 	getProducts: async () => {
 		await getProductsService(set);
 	},

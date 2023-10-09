@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useProductsStore } from "../store/";
 import ProductsList from "../components/ProductsList";
 import ProductsSearchBar from "../components/ProductsSearchBar";
+import CategoriesList from "../components/CategoriesList";
 
 const Products = () => {
 	const state = useProductsStore((state) => state);
@@ -30,6 +31,7 @@ const Products = () => {
 				<Text style={styles.textHeader}>Mis Productos</Text>
 				<View style={styles.divider} />
 				<ProductsSearchBar />
+				<CategoriesList />
 				{!state.products && state.error && (
 					<View style={styles.errorContainer}>
 						<Text style={styles.errorContainerText}>
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: 4,
 		backgroundColor: Colors.EerieBlack,
-		marginBottom: 16,
+		marginBottom: 8,
 		marginTop: 16,
 		borderRadius: 2,
 	},

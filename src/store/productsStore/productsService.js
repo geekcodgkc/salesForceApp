@@ -15,7 +15,6 @@ const getProductsService = async (set) => {
 			loading: false,
 			error: null,
 		}));
-		console.log(data);
 	} catch (error) {
 		console.log(error);
 		set((state) => ({ ...state, loading: false, error }));
@@ -55,8 +54,6 @@ const textSearchService = (search, set) => {
 				search.toLowerCase(),
 			),
 		);
-
-		console.log(filtered.map((e) => e.name));
 		return { ...state, filteredProducts: filtered };
 	});
 };
