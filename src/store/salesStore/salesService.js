@@ -19,8 +19,6 @@ const getCustomersService = async (set) => {
 	set((state) => ({ ...state, loading: true }));
 	try {
 		const { data } = await api.get("/customer");
-		console.log(data);
-		console.log("yo");
 		set((state) => ({ ...state, loading: false, customers: data }));
 	} catch (error) {
 		console.log(error);

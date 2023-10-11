@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useProductsStore } from "../store";
 
 const ProductsSearchBar = () => {
-	const [search, setSearch] = useState("");
 	const state = useProductsStore((state) => state);
+	const [search, setSearch] = useState(state.textSearch);
 
 	const handleSearch = (e) => {
-		state.textSearch(e);
+		state.setTextSearch(e);
 	};
 
 	return (

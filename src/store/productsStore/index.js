@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import {
-	getProductsService,
-	getDepartmentsSerice,
-	textSearchService,
-} from "./productsService";
+import { getProductsService, getDepartmentsSerice } from "./productsService";
 
 export const useProductsStore = create((set) => ({
 	loading: false,
@@ -12,6 +8,7 @@ export const useProductsStore = create((set) => ({
 	filteredProducts: null,
 	departments: null,
 	selectedDepartments: null,
+	textSearch: "",
 	setSelectedDepartments: (departments) => {
 		set((state) => ({ ...state, selectedDepartments: departments }));
 	},
@@ -21,7 +18,7 @@ export const useProductsStore = create((set) => ({
 	getDepartments: async () => {
 		await getDepartmentsSerice(set);
 	},
-	textSearch: (search) => {
-		textSearchService(search, set);
+	setTextSearch: (search) => {
+		set((state) => ({ ...state, textSearch: search }));
 	},
 }));

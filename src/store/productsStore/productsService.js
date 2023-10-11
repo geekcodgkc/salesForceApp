@@ -40,22 +40,4 @@ const getDepartmentsSerice = async (set) => {
 	}
 };
 
-const textSearchService = (search, set) => {
-	if (search.trim() === "")
-		set((state) => {
-			state.filteredProducts = state.products;
-			return state;
-		});
-	set((state) => {
-		const filtered = state.products.filter((product) =>
-			`${product.name.toLowerCase()} ${product.department
-				.join(" ")
-				.toLowerCase()} ${product.id.toString().toLowerCase()}`.includes(
-				search.toLowerCase(),
-			),
-		);
-		return { ...state, filteredProducts: filtered };
-	});
-};
-
-export { getProductsService, getDepartmentsSerice, textSearchService };
+export { getProductsService, getDepartmentsSerice };

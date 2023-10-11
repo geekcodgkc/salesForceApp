@@ -9,15 +9,58 @@ import {
 	SafeAreaView,
 } from "react-native";
 import Colors from "../res/colors";
-//import { useEffect } from "react";
-//import { useProductsStore } from "../store";
+import { useProductsStore } from "../store";
+import { useEffect, useMemo, useState } from "react";
 
-const ProductsList = ({ productsList, loading, extra }) => {
-	//const state = useProductsStore((state) => state);
+const ProductsList = () => {
+	const state = useProductsStore((state) => state);
+	const [fproducts, setFproducts] = useState(state.products || []);
+
+	const filtered = useMemo(() => {
+		if (
+			state.textSearch === "" &&
+			(!state.departments || state.selectedDepartments?.length < 1)
+		) {
+			return state.products;
+		}
+
+		let products = state.products;
+
+		if (state.textSearch && state.textSearch.length > 0) {
+			products = products.filter((product) =>
+				`${product.name.toLowerCase()} ${product.id
+					.toString()
+					.toLowerCase()}`.includes(state.textSearch.toLowerCase()),
+			);
+		}
+
+		if (state.selectedDepartments && state.selectedDepartments.length > 0) {
+			products = products.filter((product) => {
+				let result = false;
+
+				state.selectedDepartments.forEach((selectedDeparment) => {
+					const deparments = product.department.join(" ");
+					if (
+						deparments.toLowerCase().includes(selectedDeparment.toLowerCase())
+					) {
+						result = true;
+					}
+				});
+
+				return result;
+			});
+		}
+
+		return products;
+	}, [state.textSearch, state.selectedDepartments, state.products]);
+
+	useEffect(() => {
+		setFproducts(filtered);
+	}, [filtered]);
 
 	return (
 		<View style={styles.ListContainer}>
-			{loading && (
+			{state.loading && (
 				<ActivityIndicator
 					size={Platform.OS === "ios" ? "Large" : 100}
 					color={Colors.PigmentGreen}
@@ -31,10 +74,9 @@ const ProductsList = ({ productsList, loading, extra }) => {
 					flex: 1,
 				}}
 			>
-				{productsList.length > 0 ? (
+				{state.products ? (
 					<FlatList
-						extraData={extra}
-						data={productsList}
+						data={fproducts}
 						renderItem={({ item, index }) => {
 							return (
 								<TouchableOpacity
