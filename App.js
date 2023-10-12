@@ -8,6 +8,7 @@ import { useUserStore } from "./src/store";
 import Products from "./src/screens/Products";
 import Cart from "./src/screens/Cart";
 import Profile from "./src/screens/Profile";
+import ProductDetail from "./src/screens/ProductDetail";
 
 const Tabs = createBottomTabNavigator();
 
@@ -101,6 +102,20 @@ export default function App() {
 									);
 								},
 							}}
+						/>
+						<Tabs.Screen
+							name="ProductDetail"
+							component={ProductDetail}
+							options={
+								{
+									tabBarIconStyle: {
+										display: "none",
+									},
+									tabBarItemStyle: {
+										display: "none",
+									}
+								}
+							}
 						/>
 					</>
 				) : (

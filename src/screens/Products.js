@@ -13,7 +13,7 @@ import ProductsList from "../components/ProductsList";
 import ProductsSearchBar from "../components/ProductsSearchBar";
 import CategoriesList from "../components/CategoriesList";
 
-const Products = () => {
+const Products = ({navigation}) => {
 	const state = useProductsStore((state) => state);
 
 	useEffect(() => {
@@ -51,9 +51,7 @@ const Products = () => {
 				)}
 				{state.products && !state.error && (
 					<ProductsList
-						productsList={state.filteredProducts}
-						loading={state.loading}
-						extra={state.filteredProducts}
+						navigation={navigation}
 					/>
 				)}
 			</ScrollView>

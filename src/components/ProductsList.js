@@ -12,7 +12,7 @@ import Colors from "../res/colors";
 import { useProductsStore } from "../store";
 import { useEffect, useMemo, useState } from "react";
 
-const ProductsList = () => {
+const ProductsList = ({navigation}) => {
 	const state = useProductsStore((state) => state);
 	const [fproducts, setFproducts] = useState(state.products || []);
 
@@ -82,7 +82,7 @@ const ProductsList = () => {
 								<TouchableOpacity
 									style={styles.cardContainer}
 									onPress={() =>
-										console.log(`elemento con index ${index} presionado`)
+										navigation.navigate('ProductDetail', item)
 									}
 								>
 									<Text style={styles.cardHeaderText}>
