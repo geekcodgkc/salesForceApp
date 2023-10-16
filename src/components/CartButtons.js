@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
 		gap: 12,
 		alignItems: "center",
 		flexDirection: "row",
-		marginTop: 32,
 	},
 	inputContainer: {
 		borderBlockColor: Colors.EerieBlack,

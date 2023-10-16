@@ -4,6 +4,7 @@ export const useCartStore = create((set) => ({
 	loading: false,
 	error: null,
 	cart: {},
+	currentClient: null,
 	addToCart: (item) => {
 		set((state) => {
 			item.amount = 1;
