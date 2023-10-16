@@ -10,6 +10,7 @@ import Colors from "../res/colors";
 import { useCartStore } from "../store";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import CartButton from "../components/CartButton";
+import CartButtons from "../components/CartButtons";
 
 export default function ProductDetail({ route, navigation }) {
 	const { params: item } = route;
@@ -25,23 +26,21 @@ export default function ProductDetail({ route, navigation }) {
 				<Text
 					style={styles.textBody}
 				>{`Cantidad disponible: ${item.qty}`}</Text>
+				<Text
+					style={styles.textBody}
+				>{`Precio Unitario: ${item.prices.p1}$`}</Text>
 				{!state.cart?.[item.id] ? (
 					<TouchableOpacity
 						onPress={() => {
 							state.addToCart(item);
 						}}
+						style={styles.addToCartButton}
 					>
-						<Text>Agregar al Carro</Text>
-						<Ionicons name="cart-outline" size={32} />
+						<Text style={styles.addToCartButtonText}>Agregar al Carro</Text>
+						<Ionicons name="cart-outline" size={32} color={"white"} />
 					</TouchableOpacity>
 				) : (
-					<TouchableOpacity
-						onPress={() => {
-							state.removeFromCart(item.id);
-						}}
-					>
-						<Text>Sumar Mas</Text>
-					</TouchableOpacity>
+					<CartButtons item={item} />
 				)}
 			</ScrollView>
 			{Object.keys(state.cart).length > 0 && (
@@ -78,5 +77,22 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		textAlign: "left",
 		fontWeight: "bold",
+	},
+	addToCartButton: {
+		marginTop: 42,
+		alignSelf: "center",
+		flexDirection: "row",
+		flexWrap: "wrap",
+		gap: 8,
+		alignItems: "center",
+		backgroundColor: Colors.EerieBlack,
+		paddingVertical: 8,
+		paddingHorizontal: 16,
+		borderRadius: 8,
+	},
+	addToCartButtonText: {
+		fontSize: 18,
+		fontWeight: "700",
+		color: Colors.white,
 	},
 });

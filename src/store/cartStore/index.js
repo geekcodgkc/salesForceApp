@@ -6,6 +6,7 @@ export const useCartStore = create((set) => ({
 	cart: {},
 	addToCart: (item) => {
 		set((state) => {
+			item.amount = 1;
 			const newCart = {
 				...state.cart,
 			};
@@ -21,6 +22,15 @@ export const useCartStore = create((set) => ({
 				if (item[0] === id) return;
 				newCart[item[0]] = item[1];
 			});
+
+			return { ...state, cart: newCart };
+		});
+	},
+	setNewAmount: (id, amount) => {
+		set((state) => {
+			const newCart = { ...state.cart };
+			newCart[id].amount =
+				state.cart[id].qty < amount ? state.cart[id].qty : amount;
 
 			return { ...state, cart: newCart };
 		});
