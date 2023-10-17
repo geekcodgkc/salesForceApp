@@ -13,7 +13,7 @@ import ProductsList from "../components/ProductsList";
 import ProductsSearchBar from "../components/ProductsSearchBar";
 import CategoriesList from "../components/CategoriesList";
 
-const Products = ({navigation}) => {
+const Products = ({ navigation }) => {
 	const state = useProductsStore((state) => state);
 
 	useEffect(() => {
@@ -42,7 +42,6 @@ const Products = ({navigation}) => {
 							onPress={() => {
 								state.getProducts();
 								state.getDepartments();
-								console.log("press");
 							}}
 						>
 							<Text style={styles.btnText}>Reintentar</Text>
@@ -50,9 +49,7 @@ const Products = ({navigation}) => {
 					</View>
 				)}
 				{state.products && !state.error && (
-					<ProductsList
-						navigation={navigation}
-					/>
+					<ProductsList navigation={navigation} />
 				)}
 			</ScrollView>
 		</View>

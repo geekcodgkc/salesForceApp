@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { getCustomersService, getSalesService } from "./salesService";
+import {
+	getCustomersService,
+	getSalesService,
+	createOrderService,
+} from "./salesService";
 
 export const useSalesStore = create((set) => ({
 	loading: false,
@@ -11,5 +15,8 @@ export const useSalesStore = create((set) => ({
 	},
 	getCustomers: async () => {
 		await getCustomersService(set);
+	},
+	createOrder: async (data) => {
+		await createOrderService(set, data);
 	},
 }));

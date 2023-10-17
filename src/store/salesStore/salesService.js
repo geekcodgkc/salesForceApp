@@ -1,4 +1,5 @@
 import api from "../../res/api";
+import Toast from "react-native-toast-message";
 
 const getSalesService = async (set) => {
 	set((state) => ({ ...state, loading: true }));
@@ -28,4 +29,6 @@ const getCustomersService = async (set) => {
 	}
 };
 
-export { getSalesService, getCustomersService };
+const createOrderService = async (set, data) => {};
+
+export { getSalesService, getCustomersService, createOrderService };

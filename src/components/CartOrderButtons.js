@@ -1,9 +1,32 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, Modal, View } from "react-native";
 import Colors from "../res/colors";
+import { useCartStore, useUserStore } from "../store";
+import Toast from "react-native-toast-message";
 
 export default function CartOrderButtons() {
 	const [open, setOpen] = useState(false);
+	const { currentClient, cart } = useCartStore((state) => state);
+	const { userData } = useUserStore((state) => state);
+	const { createOrder } = useUserStore((state) => state);
+
+	const handleOrder = () => {
+		if (!currentClient) {
+			return Toast.show({
+				type: "error",
+				text1: "Debes Seleccionar Algun Cliente para crear la orden",
+			});
+		}
+
+		console.log(userData);
+
+		const data = {
+			client: currentClient._id,
+			seller: userData._id,
+			date: new Date(),
+			shippingDate: new Date(),
+		};
+	};
 
 	return (
 		<>
@@ -49,7 +72,7 @@ export default function CartOrderButtons() {
 							>
 								<Text style={styles.errorButton}>Cancelar</Text>
 							</TouchableOpacity>
-							<TouchableOpacity>
+							<TouchableOpacity onPress={handleOrder}>
 								<Text style={styles.buttonPrimary}>Aceptar</Text>
 							</TouchableOpacity>
 						</View>

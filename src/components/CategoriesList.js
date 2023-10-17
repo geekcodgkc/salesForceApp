@@ -26,7 +26,6 @@ const CategoriesList = () => {
 		} else {
 			departments.delete(name);
 		}
-		console.log(departments);
 	};
 
 	const handleSetCat = () => {
@@ -78,7 +77,6 @@ const CategoriesList = () => {
 
 								if (isActive) {
 									departments.add(d.name);
-									console.log(departments);
 								}
 
 								return (
