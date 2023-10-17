@@ -14,7 +14,6 @@ export default function CartButtons({ item }) {
 	const state = useCartStore((state) => state);
 
 	const handleText = (text) => {
-		console.log("change in amount", text, parseInt(text));
 		state.setNewAmount(item.id, text.trim() === "" ? 0 : parseInt(text));
 	};
 
@@ -34,8 +33,8 @@ export default function CartButtons({ item }) {
 
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity onPress={handleAdd}>
-				<Ionicons name="add-circle-outline" color={"black"} size={42} />
+			<TouchableOpacity onPress={hanldeRemove}>
+				<Ionicons name="remove-circle-outline" color={"black"} size={42} />
 			</TouchableOpacity>
 			<View style={styles.inputContainer}>
 				<TextInput
@@ -45,8 +44,8 @@ export default function CartButtons({ item }) {
 					onChangeText={handleText}
 				/>
 			</View>
-			<TouchableOpacity onPress={hanldeRemove}>
-				<Ionicons name="remove-circle-outline" color={"black"} size={42} />
+			<TouchableOpacity onPress={handleAdd}>
+				<Ionicons name="add-circle-outline" color={"black"} size={42} />
 			</TouchableOpacity>
 			<TouchableOpacity
 				onPress={() => {

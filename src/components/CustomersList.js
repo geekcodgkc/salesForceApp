@@ -50,7 +50,6 @@ const CustomersList = () => {
 						<FlatList
 							data={state.customers}
 							renderItem={({ item, index }) => {
-								console.log(item);
 								return (
 									<TouchableOpacity
 										style={styles.cardContainer}

@@ -64,7 +64,6 @@ const CategoriesList = () => {
 				onRequestClose={() => {
 					setOpen(false);
 				}}
-				opac
 			>
 				<View style={styles.modalOptions}>
 					<View style={styles.OptionsContainer}>

@@ -16,8 +16,6 @@ export default function ProductDetail({ route, navigation }) {
 	const { params: item } = route;
 	const state = useCartStore((state) => state);
 
-	console.log(item);
-
 	return (
 		<View style={styles.container}>
 			<ScrollView style={styles.scrollContainer}>
