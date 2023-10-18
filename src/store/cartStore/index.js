@@ -39,4 +39,7 @@ export const useCartStore = create((set) => ({
 	setCurrentClient: (client) => {
 		set((state) => ({ ...state, currentClient: client }));
 	},
+	clearCart: () => {
+		set((state) => ({ ...state, cart: {}, currentClient: null }));
+	},
 }));

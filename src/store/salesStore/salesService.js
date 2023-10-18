@@ -29,6 +29,19 @@ const getCustomersService = async (set) => {
 	}
 };
 
-const createOrderService = async (set, data) => {};
+const createOrderService = async (set, data, cb) => {
+	set((state) => ({ ...state, loading: true }));
+	try {
+		const response = await api.post("/orders", data);
+		cb();
+		console.log(response);
+	} catch (error) {
+		Toast.show({
+			type: "error",
+			text1: "hubo un error al procesar la orden",
+		});
+		set((state) => ({ ...state, loading: false }));
+	}
+};
 
 export { getSalesService, getCustomersService, createOrderService };

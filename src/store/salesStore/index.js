@@ -16,7 +16,7 @@ export const useSalesStore = create((set) => ({
 	getCustomers: async () => {
 		await getCustomersService(set);
 	},
-	createOrder: async (data) => {
-		await createOrderService(set, data);
+	createOrder: async (data, cb) => {
+		await createOrderService(set, data, cb);
 	},
 }));

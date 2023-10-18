@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, Modal, View } from "react-native";
 import Colors from "../res/colors";
-import { useCartStore, useUserStore } from "../store";
+import { useCartStore, useSalesStore, useUserStore } from "../store";
 import Toast from "react-native-toast-message";
 
 export default function CartOrderButtons() {
 	const [open, setOpen] = useState(false);
-	const { currentClient, cart } = useCartStore((state) => state);
+	const { currentClient, cart, clearCart } = useCartStore((state) => state);
 	const { userData } = useUserStore((state) => state);
-	const { createOrder } = useUserStore((state) => state);
+	const { createOrder, getOrders } = useSalesStore((state) => state);
 
 	const handleOrder = () => {
 		if (!currentClient) {
@@ -20,12 +20,35 @@ export default function CartOrderButtons() {
 
 		console.log(userData);
 
+		const orderTotal = Object.values(cart).reduce((acc, curr, i) => {
+			const total = curr.prices.p1 * curr.amount;
+			return acc + total;
+		}, 0);
+
 		const data = {
 			client: currentClient._id,
 			seller: userData._id,
 			date: new Date(),
 			shippingDate: new Date(),
+			orderTotal: orderTotal * 1.16,
+			orderBase: orderTotal,
+			products: Object.values(cart).map((item) => {
+				return {
+					product: item._id,
+					price: item.prices.p1,
+					qty: item.amount,
+				};
+			}),
+			iva: orderTotal * 0.16,
+			status: 0,
+			shippingAddress: currentClient.shippingAddress,
 		};
+
+		createOrder(data, () => {
+			getOrders();
+			setOpen(false);
+			clearCart();
+		});
 	};
 
 	return (
