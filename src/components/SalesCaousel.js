@@ -16,6 +16,8 @@ const SalesCarousel = () => {
 		if (!state.orders && !state.loading) state.getOrders();
 	}, [state.orders]);
 
+	console.log(state.orders);
+
 	return (
 		<View style={styles.CarouselContainer}>
 			<Text style={styles.TextHeader}>Mis Ordenes</Text>
@@ -29,12 +31,33 @@ const SalesCarousel = () => {
 				<View
 					style={{
 						width: "100%",
-						padding: 0,
+						paddingHorizontal: 16,
 						margin: 0,
 					}}
 				>
 					{state.orders.length > 0 ? (
-						<Text>mas ordernes</Text>
+						<>
+							{state.orders.slice(0, 3).map((e) => (
+								<View
+									style={{
+										marginBottom: 8,
+										paddingBottom: 4,
+										borderBottomWidth: 2,
+										borderColor: "white",
+									}}
+								>
+									<Text
+										style={styles.BodyText}
+									>{`numero de Orden: ${e.orderNumber}`}</Text>
+									<Text
+										style={styles.BodyText}
+									>{`Ciente: ${e.client.name}`}</Text>
+									<Text
+										style={styles.BodyText}
+									>{`Total: ${e.orderTotal}$`}</Text>
+								</View>
+							))}
+						</>
 					) : (
 						<Text style={styles.InfoText}>Aun no tienes ordenes ...</Text>
 					)}
@@ -66,6 +89,9 @@ const styles = StyleSheet.create({
 		fontWeight: "400",
 		color: Colors.WhiteSmoke,
 		marginBottom: 24,
+	},
+	BodyText: {
+		color: "white",
 	},
 });
 

@@ -18,8 +18,6 @@ export default function CartOrderButtons() {
 			});
 		}
 
-		console.log(userData);
-
 		const orderTotal = Object.values(cart).reduce((acc, curr, i) => {
 			const total = curr.prices.p1 * curr.amount;
 			return acc + total;

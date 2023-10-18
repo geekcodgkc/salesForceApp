@@ -4,7 +4,7 @@ import Toast from "react-native-toast-message";
 const getSalesService = async (set) => {
 	set((state) => ({ ...state, loading: true }));
 	try {
-		const { data } = await api.get("/orders");
+		const { data } = await api.get("/orders?populated=true");
 		set((state) => ({ ...state, loading: false, orders: data }));
 	} catch (error) {
 		set((state) => ({
@@ -32,9 +32,8 @@ const getCustomersService = async (set) => {
 const createOrderService = async (set, data, cb) => {
 	set((state) => ({ ...state, loading: true }));
 	try {
-		const response = await api.post("/orders", data);
+		await api.post("/orders", data);
 		cb();
-		console.log(response);
 	} catch (error) {
 		Toast.show({
 			type: "error",
