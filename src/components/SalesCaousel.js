@@ -39,6 +39,7 @@ const SalesCarousel = () => {
 						<>
 							{state.orders.slice(0, 3).map((e) => (
 								<View
+									key={e._id}
 									style={{
 										marginBottom: 8,
 										paddingBottom: 4,
