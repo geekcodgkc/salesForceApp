@@ -53,9 +53,9 @@ const SalesCarousel = () => {
 									<Text
 										style={styles.BodyText}
 									>{`Ciente: ${e.client.name}`}</Text>
-									<Text
-										style={styles.BodyText}
-									>{`Total: ${e.orderTotal}$`}</Text>
+									<Text style={styles.BodyText}>{`Total: ${e.orderTotal.toFixed(
+										2,
+									)}$`}</Text>
 								</View>
 							))}
 						</>

@@ -14,6 +14,7 @@ const Tabs = createBottomTabNavigator();
 
 export default function App() {
 	const state = useUserStore((state) => state);
+
 	return (
 		<NavigationContainer>
 			<Tabs.Navigator
@@ -106,16 +107,14 @@ export default function App() {
 						<Tabs.Screen
 							name="ProductDetail"
 							component={ProductDetail}
-							options={
-								{
-									tabBarIconStyle: {
-										display: "none",
-									},
-									tabBarItemStyle: {
-										display: "none",
-									}
-								}
-							}
+							options={{
+								tabBarIconStyle: {
+									display: "none",
+								},
+								tabBarItemStyle: {
+									display: "none",
+								},
+							}}
 						/>
 					</>
 				) : (
