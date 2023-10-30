@@ -1,5 +1,6 @@
 import Toast from "react-native-toast-message";
 import api from "../../res/api";
+import { login as socketLogin } from "../../res/socket";
 
 const login = async (user, password, set) => {
 	set((state) => ({ ...state, loading: true, error: null }));
@@ -20,6 +21,10 @@ const login = async (user, password, set) => {
 			token: data.token,
 			error: null,
 		}));
+		socketLogin({
+			roomID: data.clientID,
+			readID: data.userData._id,
+		});
 	} catch (error) {
 		if (error.response && error.response.status === 500) {
 			set((state) => ({
