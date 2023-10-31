@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { getSocket } from "../../res/socket";
 
 export const useCartStore = create((set) => ({
 	loading: false,
@@ -12,11 +13,24 @@ export const useCartStore = create((set) => ({
 				...state.cart,
 			};
 			newCart[item.id] = item;
+			const socket = getSocket();
+
+			socket.emit("updateDraft", {
+				qty: 1,
+				id: item.id,
+			});
+
 			return { ...state, cart: newCart };
 		});
 	},
 	removeFromCart: (id) => {
 		set((state) => {
+			const socket = getSocket();
+			socket.emit("updateDraft", {
+				qty: parseInt(`-${state.cart[id].amount}`),
+				id,
+			});
+
 			const newCart = {};
 
 			Object.entries(state.cart).forEach((item) => {
@@ -29,9 +43,18 @@ export const useCartStore = create((set) => ({
 	},
 	setNewAmount: (id, amount) => {
 		set((state) => {
-			const newCart = { ...state.cart };
-			newCart[id].amount =
+			const newAmount =
 				state.cart[id].qty < amount ? state.cart[id].qty : amount;
+
+			const newCart = { ...state.cart };
+			const socket = getSocket();
+
+			socket.emit("updateDraft", {
+				qty: newAmount - state.cart[id].amount,
+				id,
+			});
+
+			newCart[id].amount = newAmount;
 
 			return { ...state, cart: newCart };
 		});
@@ -40,6 +63,17 @@ export const useCartStore = create((set) => ({
 		set((state) => ({ ...state, currentClient: client }));
 	},
 	clearCart: () => {
-		set((state) => ({ ...state, cart: {}, currentClient: null }));
+		set((state) => {
+			const socket = getSocket();
+
+			Object.entries(state.cart).forEach((item) => {
+				socket.emit("updateDraft", {
+					id: item[0],
+					qty: parseInt(`-${item[1].amount}`),
+				});
+			});
+
+			return { ...state, cart: {}, currentClient: null };
+		});
 	},
 }));

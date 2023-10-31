@@ -22,6 +22,8 @@ const login = async (user, password, set) => {
 			error: null,
 		}));
 
+		// iniciamos el socket y pasamos la instancia a la funcion que
+		// maneja y escucha los eventos del socket
 		const socket = initSocket({
 			readID: data.userData._id,
 			roomID: data.clientID,

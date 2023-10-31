@@ -16,7 +16,6 @@ const getProductsService = async (set) => {
 			error: null,
 		}));
 	} catch (error) {
-		console.log(error);
 		set((state) => ({ ...state, loading: false, error }));
 	}
 };

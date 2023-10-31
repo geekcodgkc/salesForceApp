@@ -28,6 +28,10 @@ const socketHandler = (socket) => {
 	socket.on("draft", (e) => {
 		console.log("draft: ", e);
 	});
+
+	socket.on("newOrder", (e) => {
+		console.log("nueva orden: ", e);
+	});
 };
 
 export { getSocket, initSocket, socketHandler };

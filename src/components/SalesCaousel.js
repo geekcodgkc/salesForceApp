@@ -16,8 +16,6 @@ const SalesCarousel = () => {
 		if (!state.orders && !state.loading) state.getOrders();
 	}, [state.orders]);
 
-	console.log(state.orders);
-
 	return (
 		<View style={styles.CarouselContainer}>
 			<Text style={styles.TextHeader}>Mis Ordenes</Text>
