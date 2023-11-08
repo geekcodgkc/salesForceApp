@@ -16,14 +16,23 @@ export default function ProductDetail({ route, navigation }) {
 	const { params: item } = route;
 	const state = useCartStore((state) => state);
 
+	const { cart, draft } = state;
+
+	let qty = item.qty;
+
+	if (draft[item.id] && typeof draft[item.id] === "number") {
+		qty -= draft[item.id];
+	}
+
+	if (cart[item.id]) {
+		qty += cart[item.id].amount;
+	}
 	return (
 		<View style={styles.container}>
 			<ScrollView style={styles.scrollContainer}>
 				<Text style={styles.textHeader}>{item.name}</Text>
 				<View style={styles.divider} />
-				<Text
-					style={styles.textBody}
-				>{`Cantidad disponible: ${item.qty}`}</Text>
+				<Text style={styles.textBody}>{`Cantidad disponible: ${qty}`}</Text>
 				<Text
 					style={styles.textBody}
 				>{`Precio Unitario: ${item.prices.p1}$`}</Text>

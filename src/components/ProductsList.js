@@ -9,11 +9,12 @@ import {
 	SafeAreaView,
 } from "react-native";
 import Colors from "../res/colors";
-import { useProductsStore } from "../store";
+import { useCartStore, useProductsStore } from "../store";
 import { useEffect, useMemo, useState } from "react";
 
-const ProductsList = ({navigation}) => {
+const ProductsList = ({ navigation }) => {
 	const state = useProductsStore((state) => state);
+	const { draft, cart } = useCartStore((state) => state);
 	const [fproducts, setFproducts] = useState(state.products || []);
 
 	const filtered = useMemo(() => {
@@ -78,19 +79,25 @@ const ProductsList = ({navigation}) => {
 					<FlatList
 						data={fproducts}
 						renderItem={({ item, index }) => {
+							let qty = item.qty;
+
+							if (draft[item.id] && typeof draft[item.id] === "number") {
+								qty -= draft[item.id];
+							}
+
+							if (cart[item.id]) {
+								qty += cart[item.id].amount;
+							}
+
 							return (
 								<TouchableOpacity
 									style={styles.cardContainer}
-									onPress={() =>
-										navigation.navigate('ProductDetail', item)
-									}
+									onPress={() => navigation.navigate("ProductDetail", item)}
 								>
 									<Text style={styles.cardHeaderText}>
 										{`Nombre: ${item.name} - ${item.id}`}
 									</Text>
-									<Text style={styles.cardInfoText}>
-										{`Stock: ${item.qty}`}
-									</Text>
+									<Text style={styles.cardInfoText}>{`Stock: ${qty}`}</Text>
 									<View style={styles.catContainer}>
 										<Text style={styles.cardInfoText}>Categorias: </Text>
 										{item.department.map((e) => (
