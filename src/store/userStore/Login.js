@@ -1,6 +1,7 @@
 import Toast from "react-native-toast-message";
 import api from "../../res/api";
 import { initSocket, socketHandler } from "../../res/socket";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const login = async (user, password, set) => {
 	set((state) => ({ ...state, loading: true, error: null }));
@@ -21,6 +22,8 @@ const login = async (user, password, set) => {
 			token: data.token,
 			error: null,
 		}));
+
+		await AsyncStorage.setItem("data", JSON.stringify(data));
 
 		// iniciamos el socket y pasamos la instancia a la funcion que
 		// maneja y escucha los eventos del socket
@@ -60,19 +63,44 @@ const login = async (user, password, set) => {
 
 const logoutService = async (set) => {
 	try {
+		await AsyncStorage.removeItem("data");
 		await api.post("/logout");
 		set((state) => ({
 			...state,
 			token: null,
 			error: null,
+			userData: null,
 		}));
 	} catch (error) {
 		set((state) => ({
 			...state,
 			token: null,
 			error: null,
+			userData: null,
 		}));
 	}
 };
 
-export { login, logoutService };
+const offlineLogin = async (set) => {
+	try {
+		const storage = await AsyncStorage.getItem("data");
+		if (storage) {
+			const data = JSON.parse(storage);
+			set((state) => ({
+				...state,
+				userData: {
+					...data.userData,
+					isAdmin: data.isAdmin,
+					clientID: data.clientID,
+				},
+				loading: false,
+				token: data.token,
+				error: null,
+			}));
+		}
+	} catch (error) {
+		console.log("hubo un error", error);
+	}
+};
+
+export { login, logoutService, offlineLogin };

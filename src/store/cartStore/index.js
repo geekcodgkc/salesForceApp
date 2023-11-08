@@ -6,6 +6,10 @@ export const useCartStore = create((set) => ({
 	error: null,
 	cart: {},
 	currentClient: null,
+	draft: {},
+	setDraft: (draft) => {
+		set((state) => ({ ...state, draft }));
+	},
 	addToCart: (item) => {
 		set((state) => {
 			item.amount = 1;
@@ -76,4 +80,5 @@ export const useCartStore = create((set) => ({
 			return { ...state, cart: {}, currentClient: null };
 		});
 	},
+	handleDraft: () => {},
 }));

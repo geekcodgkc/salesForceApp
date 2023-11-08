@@ -15,6 +15,8 @@ const LoginScreen = () => {
 	const [password, setpassword] = useState("");
 	const UserState = useUserStore((state) => state);
 
+	UserState.offlineLogin();
+
 	useEffect(() => {}, [UserState.error]);
 
 	const handleLogin = () => {

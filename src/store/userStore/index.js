@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { login as loginService, logoutService } from "./Login";
+import { login as loginService, logoutService, offlineLogin } from "./Login";
 
 export const useUserStore = create((set) => ({
 	token: null,
@@ -11,5 +11,8 @@ export const useUserStore = create((set) => ({
 	},
 	logout: async () => {
 		await logoutService(set);
+	},
+	offlineLogin: async () => {
+		await offlineLogin(set);
 	},
 }));

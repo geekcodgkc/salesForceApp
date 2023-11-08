@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import { useCartStore } from "../store";
 
 const url = "http://10.30.30.254:8002";
 
@@ -14,7 +15,6 @@ const initSocket = ({ roomID, readID }) => {
 		autoConnect: true,
 		reconnection: true,
 	});
-
 	return client;
 };
 
@@ -24,13 +24,9 @@ const getSocket = () => {
 
 const socketHandler = (socket) => {
 	socket.emit("getDraft");
-
 	socket.on("draft", (e) => {
-		console.log("draft: ", e);
-	});
-
-	socket.on("newOrder", (e) => {
-		console.log("nueva orden: ", e);
+		console.log("draft");
+		useCartStore.getState().setDraft(e);
 	});
 };
 

@@ -48,7 +48,7 @@ const Cart = () => {
 				<FlatList
 					data={Object.values(cart)}
 					renderItem={({ item }) => {
-						return <CartItem item={item} />;
+						return item ? <CartItem item={item} /> : "";
 					}}
 				/>
 				<Modal

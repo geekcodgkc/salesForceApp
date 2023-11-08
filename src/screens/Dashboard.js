@@ -1,14 +1,11 @@
 import { View, StyleSheet, ScrollView } from "react-native";
 import Colors from "../res/colors";
-import { useUserStore } from "../store/";
 import Toast from "react-native-toast-message";
 import ProfileName from "../components/ProfileName";
 import SalesCarousel from "../components/SalesCaousel";
 import CustomersList from "../components/CustomersList";
 
 const Dashboard = () => {
-	const state = useUserStore((state) => state);
-
 	return (
 		<View style={styles.container}>
 			<ScrollView style={styles.scrollContainer}>
