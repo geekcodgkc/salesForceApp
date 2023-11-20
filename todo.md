@@ -1,0 +1,1 @@
+resolver problema con el emit cuando no hay una conexion a internet

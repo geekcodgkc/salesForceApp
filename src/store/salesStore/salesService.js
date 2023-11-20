@@ -1,5 +1,7 @@
 import api from "../../res/api";
 import Toast from "react-native-toast-message";
+import * as Network from "expo-network";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const getSalesService = async (set) => {
 	set((state) => ({ ...state, loading: true }));
@@ -32,6 +34,27 @@ const getCustomersService = async (set) => {
 const createOrderService = async (set, data, cb) => {
 	set((state) => ({ ...state, loading: true }));
 	try {
+		const { isInternetReachable } = await Network.getNetworkStateAsync();
+
+		if (!isInternetReachable) {
+			const offlineOrders = await AsyncStorage.getItem("offlineOrders");
+
+			if (offlineOrders) {
+				const currentOrders = JSON.parse(offlineOrders);
+				currentORders.push(data);
+
+				await AsyncStorage.setItem(
+					"offlineOrders",
+					JSON.stringify(currentOrders),
+				);
+			} else {
+				await AsyncStorage.setItem("offlineOrders", JSON.stringify([data]));
+			}
+
+			cb();
+			return;
+		}
+
 		await api.post("/orders", data);
 		cb();
 	} catch (error) {
