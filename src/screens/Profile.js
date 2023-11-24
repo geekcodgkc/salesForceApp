@@ -8,6 +8,7 @@ import {
 import Colors from "../res/colors";
 import { useUserStore } from "../store/";
 import Toast from "react-native-toast-message";
+import OfflineOrders from "../components/OfflineOrders";
 
 const Profile = () => {
 	const state = useUserStore((state) => state);
@@ -24,6 +25,7 @@ const Profile = () => {
 				>
 					<Text>logout</Text>
 				</TouchableOpacity>
+				<OfflineOrders />
 			</ScrollView>
 		</View>
 	);

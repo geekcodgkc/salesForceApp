@@ -65,7 +65,7 @@ const CustomersList = () => {
 										>{`E-mail: ${item.email}`}</Text>
 										<Text
 											style={styles.cardInfoText}
-										>{`Telefonos: ${item.phone.join(", ")}`}</Text>
+										>{`Telefonos: ${item.phone?.join(", ")}`}</Text>
 										<Text
 											style={styles.cardInfoText}
 										>{`Direccion: ${item.address}`}</Text>

@@ -20,7 +20,27 @@ const getSalesService = async (set) => {
 const getCustomersService = async (set) => {
 	set((state) => ({ ...state, loading: true }));
 	try {
+		const { isInternetReachable } = await Network.getNetworkStateAsync();
+
+		if (isInternetReachable) {
+			const { data } = await api.get("/customer");
+			set((state) => ({ ...state, loading: false, customers: data }));
+			await AsyncStorage.setItem("offlineCustomers", JSON.stringify(data));
+			set((state) => ({ ...state, loading: false, customers: data }));
+		} else {
+			const offlineCustomers = await AsyncStorage.getItem("offlineCustomers");
+			if (offlineCustomers) {
+				set((state) => ({
+					...state,
+					loading: false,
+					customers: offlineCustomers,
+				}));
+			}
+			set((state) => ({ ...state, loading: false }));
+		}
+
 		const { data } = await api.get("/customer");
+
 		set((state) => ({ ...state, loading: false, customers: data }));
 	} catch (error) {
 		set((state) => ({
@@ -40,6 +60,7 @@ const createOrderService = async (set, data, cb) => {
 			const offlineOrders = await AsyncStorage.getItem("offlineOrders");
 
 			if (offlineOrders) {
+				console.log(offlineOrders);
 				const currentOrders = JSON.parse(offlineOrders);
 				currentORders.push(data);
 
@@ -48,6 +69,7 @@ const createOrderService = async (set, data, cb) => {
 					JSON.stringify(currentOrders),
 				);
 			} else {
+				console.log("no offline", data);
 				await AsyncStorage.setItem("offlineOrders", JSON.stringify([data]));
 			}
 
@@ -63,6 +85,7 @@ const createOrderService = async (set, data, cb) => {
 			text1: "hubo un error al procesar la orden",
 		});
 		set((state) => ({ ...state, loading: false }));
+		cb();
 	}
 };
 

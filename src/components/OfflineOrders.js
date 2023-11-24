@@ -1,21 +1,18 @@
-import React from "react";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import {
-	StyleSheet,
-	TextInput,
-	TouchableOpacity,
-	View,
-	Text,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import Colors from "../res/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function CartButtons() {
-	const orders = AsyncStorage.getItem("offlineOrders").then((e) => e);
+export default function OfflineOrders() {
+	const [orders, setOrders] = useState(null);
+
+	AsyncStorage.getItem("offlineOrders").then((e) => {
+		setOrders(e);
+	});
 
 	return (
 		<View style={styles.container}>
-			<Text>{orders}</Text>
+			{orders && <Text>{JSON.stringify(orders)}</Text>}
 		</View>
 	);
 }

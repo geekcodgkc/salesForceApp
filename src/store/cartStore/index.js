@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { getSocket } from "../../res/socket";
+import * as Network from "expo-network";
 
 export const useCartStore = create((set) => ({
 	loading: false,
@@ -19,10 +20,12 @@ export const useCartStore = create((set) => ({
 			newCart[item.id] = item;
 			const socket = getSocket();
 
-			socket.emit("updateDraft", {
-				qty: 1,
-				id: item.id,
-			});
+			if (socket) {
+				socket.emit("updateDraft", {
+					qty: 1,
+					id: item.id,
+				});
+			}
 
 			return { ...state, cart: newCart };
 		});
@@ -30,10 +33,13 @@ export const useCartStore = create((set) => ({
 	removeFromCart: (id) => {
 		set((state) => {
 			const socket = getSocket();
-			socket.emit("updateDraft", {
-				qty: parseInt(`-${state.cart[id].amount}`),
-				id,
-			});
+
+			if (socket) {
+				socket.emit("updateDraft", {
+					qty: parseInt(`-${state.cart[id].amount}`),
+					id,
+				});
+			}
 
 			const newCart = {};
 
@@ -53,10 +59,12 @@ export const useCartStore = create((set) => ({
 			const newCart = { ...state.cart };
 			const socket = getSocket();
 
-			socket.emit("updateDraft", {
-				qty: newAmount - state.cart[id].amount,
-				id,
-			});
+			if (socket) {
+				socket.emit("updateDraft", {
+					qty: newAmount - state.cart[id].amount,
+					id,
+				});
+			}
 
 			newCart[id].amount = newAmount;
 
