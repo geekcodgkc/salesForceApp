@@ -80,12 +80,29 @@ const createOrderService = async (set, data, cb) => {
 		await api.post("/orders", data);
 		cb();
 	} catch (error) {
+		const offlineOrders = await AsyncStorage.getItem("offlineOrders");
+
+		if (offlineOrders) {
+			console.log(offlineOrders);
+			const currentOrders = JSON.parse(offlineOrders);
+			currentORders.push(data);
+
+			await AsyncStorage.setItem(
+				"offlineOrders",
+				JSON.stringify(currentOrders),
+			);
+		} else {
+			console.log("no offline", data);
+			await AsyncStorage.setItem("offlineOrders", JSON.stringify([data]));
+		}
+
+		cb();
 		Toast.show({
 			type: "error",
-			text1: "hubo un error al procesar la orden",
+			text1:
+				"hubo un error al procesar la orden se a guardado en ordenes sin conexion",
 		});
 		set((state) => ({ ...state, loading: false }));
-		cb();
 	}
 };
 

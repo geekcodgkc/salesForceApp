@@ -7,6 +7,7 @@ export default function OfflineOrders() {
 	const [orders, setOrders] = useState(null);
 
 	AsyncStorage.getItem("offlineOrders").then((e) => {
+		console.log("order ofline", e);
 		setOrders(e);
 	});
 

@@ -30,7 +30,18 @@ const getProductsService = async (set) => {
 			}));
 		}
 	} catch (error) {
-		set((state) => ({ ...state, loading: false, error }));
+		const data = AsyncStorage.getItem("offlineProducts");
+		if (data) {
+			set((state) => ({
+				...state,
+				products: JSON.parse(data),
+				filteredProducts: JSON.parse(data),
+				loading: false,
+				error: null,
+			}));
+		} else {
+			set((state) => ({ ...state, loading: false, error }));
+		}
 	}
 };
 
@@ -63,7 +74,18 @@ const getDepartmentsSerice = async (set) => {
 			}));
 		}
 	} catch (error) {
-		set((state) => ({ ...state, loading: false, error }));
+		const data = await AsyncStorage.getItem("offlineDepartments");
+
+		if (data) {
+			set((state) => ({
+				...state,
+				departments: JSON.stringify(data),
+				loading: false,
+				error: null,
+			}));
+		} else {
+			set((state) => ({ ...state, loading: false, error }));
+		}
 	}
 };
 
