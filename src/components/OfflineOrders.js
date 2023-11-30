@@ -1,24 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Colors from "../res/colors";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useProductsStore, useSalesStore, useUserStore } from "../store";
 
 export default function OfflineOrders() {
-	const [orders, setOrders] = useState(null);
+	const { offlineOrders, getOfflineOrders, customers } = useSalesStore(
+		(state) => state,
+	);
+	const { products } = useProductsStore((state) => state);
 
-	AsyncStorage.getItem("offlineOrders").then((e) => {
-		console.log("order ofline", e);
-		setOrders(e);
-	});
+	console.log(products);
+
+	useEffect(() => {
+		getOfflineOrders();
+	}, []);
 
 	return (
 		<View style={styles.container}>
-			{orders && <Text>{JSON.stringify(orders)}</Text>}
+			<Text style={styles.textHeader}>Ordenes en Borrador</Text>
+			{offlineOrders.map((e, i) => {
+				const client = customers.find((customer) => customer._id === e.client);
+
+				return (
+					<View key={`${i}-${Math.random()}`}>
+						<Text>{`Cliente: ${client.name}`}</Text>
+						<View style={styles.div} />
+						<Text>Descripcion de la orden</Text>
+						{e.products.map((p) => {
+							const product = products.find((prdct) => prdct._id === p.product);
+							console.log(p);
+							return (
+								<Text>{`${p.qty} X ${product.name} - ${product.id}`}</Text>
+							);
+						})}
+					</View>
+				);
+			})}
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	div: {
+		width: "100%",
+		height: 1.5,
+		backgroundColor: Colors.EerieBlack,
+		marginVertical: 8,
+	},
 	container: {
 		width: "100%",
 		justifyContent: "center",
@@ -26,6 +54,7 @@ const styles = StyleSheet.create({
 		gap: 12,
 		alignItems: "center",
 		flexDirection: "row",
+		marginTop: 18,
 	},
 	inputContainer: {
 		borderBlockColor: Colors.EerieBlack,
@@ -33,24 +62,8 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		paddingHorizontal: 8,
 	},
-	input: {
-		fontWeight: "700",
-		fontSize: 24,
-		paddingHorizontal: 16,
-	},
-	removeButton: {
-		width: "100%",
-		justifyContent: "center",
-		flexDirection: "row",
-	},
-	removeButtonText: {
-		textAlign: "center",
+	textHeader: {
 		fontSize: 24,
 		fontWeight: "700",
-		color: Colors.white,
-		backgroundColor: Colors.EerieBlack,
-		padding: 8,
-		width: "80%",
-		borderRadius: 8,
 	},
 });

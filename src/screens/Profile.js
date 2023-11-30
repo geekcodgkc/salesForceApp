@@ -23,7 +23,7 @@ const Profile = () => {
 						state.logout();
 					}}
 				>
-					<Text>logout</Text>
+					<Text style={styles.btnText}>Cerrar Sesion</Text>
 				</TouchableOpacity>
 				<OfflineOrders />
 			</ScrollView>
@@ -41,8 +41,13 @@ const styles = StyleSheet.create({
 		flex: 1,
 		padding: 24,
 	},
+	btnText: {
+		fontSize: 18,
+		fontWeight: "800",
+		color: Colors.white,
+	},
 	btn: {
-		width: "70%",
+		width: "100%",
 		marginTop: 24,
 		padding: 16,
 		backgroundColor: Colors.BattleshipGray,
